@@ -7,7 +7,7 @@ app = Flask(__name__)
 model, data_loader = load_model(BEST_MODEL_PATH)
 
 
-def prepare_report(sequence):
+def prepare_report(sequence, truncated=False):
     """
     This function takes a single sequence and returns a dictionary in the following format:
     {
@@ -25,15 +25,24 @@ def prepare_report(sequence):
     """
     sequence = sequence.lower()
     candidates = extract_candidates(seq=sequence, start_codons=START_CODONS, stop_codons=STOP_CODONS)
-    candidates_filtered = [candidate for candidate in candidates if len(candidate['seq']) <= MAX_LENGTH]
+    
+    if not truncated:
+        candidates_filtered = [candidate for candidate in candidates if len(candidate['seq']) <= MAX_LENGTH]
+    else:
+        candidates_filtered = [candidate for candidate in candidates if len(candidate['seq']) <= MAX_LENGTH + 6]
+
     if len(candidates_filtered) < len(candidates):
         max_length_exceeded = True
         candidates = candidates_filtered
     else:
         max_length_exceeded = False
 
-    for candidate in candidates:
-        candidate['probability'] = predict(text=[candidate['seq']], model=model, data_loader=data_loader)
+    if not truncated:
+        for candidate in candidates:
+            candidate['probability'] = predict(text=[candidate['seq']], model=model, data_loader=data_loader)
+    else:
+        for candidate in candidates:
+            candidate['probability'] = predict(text=[candidate['seq'][3:-3]], model=model, data_loader=data_loader)
     # TODO: Finish the algortihm: return the candidate with the highst probability
 
 
