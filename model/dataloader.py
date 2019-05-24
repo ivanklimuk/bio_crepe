@@ -6,12 +6,13 @@ from sklearn.model_selection import train_test_split
 
 class DataLoader(object):
     def __init__(self,
-                 data_path=None,
+                 data_path,
+                 max_length,
                  labels_path=None,
                  categorical=False,
-                 max_length=1880,
                  header=None,
-                 lower=False
+                 lower=False,
+                 test_size=0.15
                  ):
         self.data_path = data_path
         self.labels_path = labels_path
@@ -63,7 +64,7 @@ class DataLoader(object):
         self.labels = self.labels.astype(np.float)
 
         if split:
-            return train_test_split(self.data, self.labels, random_state=128)
+            return train_test_split(self.data, self.labels, random_state=42, test_size=0.15)
         else:
             return self.data, self.labels
 

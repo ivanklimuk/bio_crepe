@@ -1,6 +1,7 @@
 # My own stuff:
 *.csv
 *.pth.tar
+.vscode/
 
 # Python stuff:
 # Byte-compiled / optimized / DLL files

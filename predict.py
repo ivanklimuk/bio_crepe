@@ -9,12 +9,9 @@ import torch
 
 
 def load_model(best_model_path):
-    data_loader = DataLoader(DATA_PATH,
-                             labels_path=None,
-                             categorical=False,
-                             max_length=MAX_LENGTH,
-                             header=None,
-                             lower=False)
+    data_loader = DataLoader(data_path=DATA_PATH,
+                             max_length=MAX_LENGTH
+                             )
     data_loader.create_vocabulary()
     model = BioCrepe(vocabulary_size=data_loader.vocabulary_size,
                   channels=CHANNELS,

@@ -1,4 +1,4 @@
-import utils
+from utils import utils
 from constants import *
 import torch
 import numpy as np
@@ -167,18 +167,14 @@ if __name__ == '__main__':
     logging.info("Loading the datasets...")
 
     # load data
-    data_loader = DataLoader(DATA_PATH,
-                             labels_path=None,
-                             categorical=False,
-                             max_length=MAX_LENGTH,
-                             header=None,
-                             lower=False
+    data_loader = DataLoader(data_path=DATA_PATH,
+                             max_length=MAX_LENGTH
                              )
     train_data, val_data, train_labels, val_labels = data_loader.load_data(split=True)
     train_data = {'data': train_data, 'labels': train_labels}
     val_data = {'data': val_data, 'labels': val_labels}
 
-    logging.info("... done.")
+    logging.info("... done. Train set size: {}, validation set size: {}.".format(len(train_data['data']), len(val_data['data'])))
 
     # Define the model and optimizer
     if cuda:
