@@ -3,37 +3,26 @@ Each of these variables should be imported as an env var in the future
 """
 import os
 # ALGORITHM PARAMETERS
-START_CODONS = ['atg']
-STOP_CODONS = ['taa', 'tag', 'tga']
+START_CODONS = os.getenv('START_CODONS', 'atg').split(',')
+STOP_CODONS = os.getenv('STOP_CODONS', 'taa,tag,tga').split(',')
 
 # MODEL PARAMETERS
-# 6896
-'''MAX_LENGTH = 6896
-CHANNELS = [64, 64, 128, 128]
-KERNEL_SIZES = [27 ,15 ,9 ,3]
-POOLING_SIZES = [5, 5, 4, 4]
-LINEAR_SIZE = 2048
-OUTPUT_SIZE = 1
-DROPOUT = 0.4'''
-
-# 6890 truncated
-MAX_LENGTH = 6890
-CHANNELS = [64, 64, 128, 128]
-KERNEL_SIZES = [21 ,15 ,9 ,3]
-POOLING_SIZES = [5, 5, 4, 4]
-LINEAR_SIZE = 2048
-OUTPUT_SIZE = 1
-DROPOUT = 0.5
+MAX_LENGTH = int(os.getenv('MAX_LENGTH'))
+CHANNELS = [int(channel) for channel in os.getenv('CHANNELS').split(',')]
+KERNEL_SIZES = [int(kernel) for kernel in os.getenv('KERNEL_SIZES').split(',')]
+POOLING_SIZES = [int(pooling) for pooling in os.getenv('POOLING_SIZES').split(',')]
+LINEAR_SIZE = int(os.getenv('LINEAR_SIZE'))
+OUTPUT_SIZE = int(os.getenv('OUTPUT_SIZE'))
+DROPOUT = float(os.getenv('DROPOUT', 0.5))
+TRUNCATED = True if os.getenv('TRUNCATED', 'False') == 'True' else False
 
 # TRAINING PARAMETERS
-EPOCHS = 50
-BATCH_SIZE = 16
-LEARNING_RATE = 0.01
+EPOCHS = int(os.getenv('EPOCHS', 50))
+BATCH_SIZE = int(os.getenv('BATCH_SIZE', 16))
+LEARNING_RATE = float(os.getenv('LEARNING_RATE', 0.01))
 
 # MISC
-MODEL_PATH = './model'
-DATA_PATH = './data/ORFs_6890_truncated.csv'
-
-EXPERIMENT_PREFIX = 'ORF_6890_truncated' + '_'
-
-BEST_MODEL_PATH = './model/' + ''
+MODEL_PATH = os.getenv('MODEL_PATH', './model')
+DATA_PATH = os.getenv('DATA_PATH', '')
+EXPERIMENT_PREFIX = os.getenv('EXPERIMENT_PREFIX') + '_'
+BEST_MODEL_PATH = MODEL_PATH + '/' + EXPERIMENT_PREFIX + 'best.pth.tar'
