@@ -2,6 +2,8 @@
 *.csv
 *.pth.tar
 .vscode/
+dev.env
+.DS_Store
 
 # Python stuff:
 # Byte-compiled / optimized / DLL files
