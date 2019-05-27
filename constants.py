@@ -1,6 +1,3 @@
-"""
-Each of these variables should be imported as an env var in the future
-"""
 import os
 # ALGORITHM PARAMETERS
 START_CODONS = os.getenv('START_CODONS', 'atg').split(',')
