@@ -1,7 +1,7 @@
 from predict import load_model, predict
 from utils.seq import extract_candidates
 from flask import Flask, request, jsonify
-from constants import MAX_LENGTH, START_CODONS, STOP_CODONS, BEST_MODEL_PATH, TRUNCATED
+from constants import MAX_LENGTH, START_CODONS, STOP_CODONS, BEST_MODEL_PATH, TRUNCATED, EXTENSION
 from tqdm import tqdm
 
 
@@ -29,7 +29,7 @@ def find_orf(sequence, truncated=False, return_top=None, return_best=True, inclu
     4) Return the one with the highest probability
     """
     sequence = sequence.lower()
-    candidates = extract_candidates(seq=sequence, start_codons=START_CODONS, stop_codons=STOP_CODONS)
+    candidates = extract_candidates(seq=sequence, start_codons=START_CODONS, stop_codons=STOP_CODONS, extension=EXTENSION)
 
     if truncated:
         start_position = 3

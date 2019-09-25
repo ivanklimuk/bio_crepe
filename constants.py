@@ -12,6 +12,7 @@ LINEAR_SIZE = int(os.getenv('LINEAR_SIZE'))
 OUTPUT_SIZE = int(os.getenv('OUTPUT_SIZE'))
 DROPOUT = float(os.getenv('DROPOUT', 0.5))
 TRUNCATED = True if os.getenv('TRUNCATED', 'False') == 'True' else False
+EXTENSION = int(os.getenv('EXTENSION', 100))
 
 # TRAINING PARAMETERS
 EPOCHS = int(os.getenv('EPOCHS', 50))
